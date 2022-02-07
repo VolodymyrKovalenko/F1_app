@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from apps.cars.views import CarsView
+from apps.cars.views import CarsView, PingView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cars/', CarsView.as_view(), name='cars'),
+    path('ping/', PingView.as_view(), name='ping'),
 ]

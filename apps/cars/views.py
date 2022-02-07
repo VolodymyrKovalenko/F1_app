@@ -12,3 +12,12 @@ class CarsView(APIView):
         cars = Car.objects.all()
         response_serializer = CarsViewSerializer(cars, many=True)
         return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+
+
+class PingView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        return Response(
+            {'ping': 'pong123'}, status=status.HTTP_200_OK
+        )

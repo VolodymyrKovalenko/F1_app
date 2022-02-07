@@ -11,31 +11,24 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
-import environ
 from pathlib import Path
 
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, []),
-)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
 # False if not in os.environ because of casting above
-DEBUG = bool(env('DEBUG'))
+DEBUG = os.getenv('DEBUG') not in ('0', 'False', 'false')
 
 # Raises Django's ImproperlyConfigured
 # exception if SECRET_KEY not in os.environ
-SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")  # example ALLOWED_HOSTS=example.com,awesomedomain.com
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+# example ALLOWED_HOSTS=example.com,awesomedomain.com
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOSTS') else []
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 
 # Application definition
@@ -43,6 +36,7 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")  # example ALLOWED_HOSTS=example.com,a
 INSTALLED_APPS = [
     'apps.cars',
     'apps.drivers',
+    'apps.core',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -90,11 +84,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('POSTGRES_DB_NAME'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('POSTGRES_HOST'),
-        'PORT': env('POSTGRES_PORT'),
+        'NAME': os.getenv('POSTGRES_DB_NAME'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 
@@ -134,7 +128,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

@@ -10,6 +10,12 @@ docker ps
 docker exec -it <CONTAINER ID> bash
 ``` 
 
+### For NEW POSTGRE DB:
+```bash
+create database carsDB;
+psql -h <host> -p 5432 -d <carsdb> -U postgres -W
+```
+
 ### 3. Create venv
 * Python (3.9)
 ```bash
