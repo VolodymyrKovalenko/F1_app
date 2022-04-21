@@ -1,7 +1,7 @@
 # F1 project
 ## Installation locally: 
 ### 1 add .env file to root folder
-### 2. run PostgreSQL database inside docker container
+### 2.1 run PostgreSQL database inside docker container
 
 ```bash
 docker-compose up
@@ -10,7 +10,7 @@ docker ps
 docker exec -it <CONTAINER ID> bash
 ``` 
 
-### For NEW POSTGRE DB:
+### 2.2 run for new remote postgre db:
 ```bash
 create database carsDB;
 psql -h <host> -p 5432 -d <carsdb> -U postgres -W
@@ -21,10 +21,16 @@ psql -h <host> -p 5432 -d <carsdb> -U postgres -W
 ```bash
 python -m venv venv
 ```
-### 4. Install requirements
+### 4.1 Install requirements
 ```bash
 pip install -r requirements.txt
 ```
+
+### 4.2 Load environment variables
+```bash
+export $(cat .env | xargs)
+```
+
 ### 5. Check that django has connected to sql-server 
 ```bash
 python manage.py dbshell
@@ -53,4 +59,24 @@ pytest tests/
 ### 10. Run flake8
 ```bash
 flake8
+```
+
+### Run Celery beat locally:
+```bash
+celery -A config beat --loglevel=info
+```
+### Run Celery worker locally:
+```bash
+celery -A config worker --loglevel=info
+```
+
+### SQS queue setup mac:
+```bash
+export LDFLAGS=-L/usr/local/opt/openssl/lib
+export LDFLAGS=-L/usr/local/opt/openssl/lib
+pip install -r requirements.txt
+
+yum:
+libcurl-devel: []
+openssl-devel: []
 ```
