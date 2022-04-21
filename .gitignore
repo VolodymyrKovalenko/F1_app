@@ -54,3 +54,4 @@ postgre_data/
 #DRF static fiels
 static/admin/*
 static/rest_framework/*
+celerybeat-schedule.db

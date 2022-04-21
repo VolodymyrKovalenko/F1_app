@@ -135,3 +135,28 @@ STATIC_ROOT = 'static'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AWS SQS QUEUE settings
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = os.getenv('AWS_REGION')
+AWS_QUEUE_NAME_PREFIX = os.getenv('AWS_QUEUE_NAME_PREFIX')
+
+
+CELERY_TASK_DEFAULT_QUEUE = 'F1-Cars-queue'
+CELERY_BROKER_URL = "sqs://%s:%s@" % (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    "region": AWS_REGION,
+    'queue_name_prefix': AWS_QUEUE_NAME_PREFIX,
+    'visibility_timeout': 50,
+    'polling_interval': 1
+}
+
+CELERY_RESULT_BACKEND = None
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+CELERY_IMPORTS = ('apps.core.tasks.summary_task', )
