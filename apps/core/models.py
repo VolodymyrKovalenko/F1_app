@@ -9,6 +9,9 @@ class CarsSummary(models.Model):
     aggregation_date = models.DateField()
     creation_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'Car Summary {self.id}'
+
 
 class CarsSummaryDAO:
     TIME_DELTA = timedelta(days=1)
