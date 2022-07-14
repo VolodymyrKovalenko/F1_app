@@ -12,6 +12,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'daily-summary-task': {
         'task': 'apps.core.tasks.summary_task.daily_summary',
-        'schedule': crontab(30, 11),
+        'schedule': crontab(10, 10),
     },
 }
