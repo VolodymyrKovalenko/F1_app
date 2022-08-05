@@ -15,7 +15,7 @@ from pathlib import Path
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # TODO
 
 # False if not in os.environ because of casting above
 DEBUG = os.getenv('DEBUG') not in ('0', 'False', 'false')
@@ -132,7 +132,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 MEDIA_URL = 'public/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'  # TODO
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -145,6 +145,7 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_REGION = os.getenv('AWS_REGION')
 AWS_QUEUE_NAME_PREFIX = os.getenv('AWS_QUEUE_NAME_PREFIX')
+
 
 CELERY_TASK_DEFAULT_QUEUE = 'F1-Cars-queue'
 CELERY_BROKER_URL = "sqs://"

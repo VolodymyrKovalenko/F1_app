@@ -55,3 +55,4 @@ postgre_data/
 static/admin/*
 static/rest_framework/*
 celerybeat-schedule.db
+media/
